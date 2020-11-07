@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using BaseRateApp.Models.Response;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-using Models;
 using Newtonsoft.Json;
 using Serilog;
 using System;
@@ -9,7 +9,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace BaseRateApp.Middleware
+namespace BaseRateApp.WebApi.Middleware
 {
     public class ErrorHandling
     {

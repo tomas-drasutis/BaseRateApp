@@ -1,11 +1,11 @@
 ﻿using Autofac;
+using BaseRateApp.Services;
+using BaseRateApp.Services.CustomerService;
+using BaseRateApp.Services.CustomerService.Implementations;
+using BaseRateApp.Services.Implementations;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace BaseRateApp.Middleware
+namespace BaseRateApp.WebApi.Middleware
 {
     public class AutofacModule : Module
     {
@@ -14,6 +14,9 @@ namespace BaseRateApp.Middleware
             base.Load(builder);
 
             builder.Register(x => Log.Logger).SingleInstance();
+
+            builder.RegisterType<AgreementService>().As<IAgreementService>().InstancePerDependency();
+            builder.RegisterType<CustomerService>().As<ICustomerService>().InstancePerDependency();
 
         }
     }

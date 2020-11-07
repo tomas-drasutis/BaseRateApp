@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp", "BaseRateApp\BaseRateApp.csproj", "{8E948902-212F-47BC-B13A-85AF91ABE70C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp.WebApi", "BaseRateApp\BaseRateApp.WebApi.csproj", "{8E948902-212F-47BC-B13A-85AF91ABE70C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{B831677E-B272-4C9B-A31E-B6F45D9DFBD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp.Models", "Models\BaseRateApp.Models.csproj", "{B831677E-B272-4C9B-A31E-B6F45D9DFBD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp.Services", "Services\BaseRateApp.Services.csproj", "{64CB6D1A-162C-4A19-B281-8C095CD60DF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B831677E-B272-4C9B-A31E-B6F45D9DFBD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B831677E-B272-4C9B-A31E-B6F45D9DFBD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B831677E-B272-4C9B-A31E-B6F45D9DFBD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

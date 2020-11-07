@@ -1,16 +1,19 @@
 using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using BaseRateApp.Middleware;
+using AutoMapper;
+using BaseRateApp.Services.Mapper;
+using BaseRateApp.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
-namespace BaseRateApp
+namespace BaseRateApp.WebApi
 {
     public class Startup
     {
@@ -26,6 +29,7 @@ namespace BaseRateApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureMappers(services);
 
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
@@ -38,17 +42,23 @@ namespace BaseRateApp
                 x.SwaggerDoc("v1", new OpenApiInfo { Title = ServiceName, Version = "v1" });
             });
 
-            services.AddOptions();
+        }
+
+        private static void ConfigureMappers(IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MapperProfile>();
+            });
+
+            var mapper = new Mapper(mapperConfig);
+
+            services.AddSingleton<IMapper>(x => mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "swagger/{documentName}/swagger.json";
@@ -59,21 +69,14 @@ namespace BaseRateApp
                 c.SwaggerEndpoint("v1/swagger.json", ServiceName + " API V1");
             });
 
-            app.Use(async (httpContext, next) =>
-            {
-                if (string.IsNullOrEmpty(httpContext.Request.Path) ||
-                    httpContext.Request.Path == "/" ||
-                    httpContext.Request.Path == "/api")
-                {
-                    httpContext.Response.Redirect(httpContext.Request.PathBase + "/swagger");
-                    return;
-                }
+            app.UseRouting();
 
-                await next();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
             });
 
             app.UseMiddleware<ErrorHandling>();
-            app.UseHttpsRedirection();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
