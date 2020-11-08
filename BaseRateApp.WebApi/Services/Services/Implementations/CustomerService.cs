@@ -18,14 +18,11 @@ namespace BaseRateApp.Services.CustomerService.Implementations
 
         public Task<CustomerResponse> Create(CustomerRequest model) => _customerRepository.Create(model);
 
-
         public Task<IEnumerable<CustomerResponse>> GetAll() => _customerRepository.GetAll();
 
         public Task<CustomerResponse> GetById(Guid id) => _customerRepository.GetById(id);
 
-
         public Task<CustomerResponse> Update(Guid id, CustomerRequest model) => _customerRepository.Update(id, model);
-
 
     }
 }

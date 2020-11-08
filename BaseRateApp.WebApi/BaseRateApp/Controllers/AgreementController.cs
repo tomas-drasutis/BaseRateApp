@@ -1,4 +1,5 @@
-﻿using BaseRateApp.Models.Response;
+﻿using BaseRateApp.Models.Request;
+using BaseRateApp.Models.Response;
 using BaseRateApp.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +57,15 @@ namespace BaseRateApp.WebApi.Controllers
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] AgreementRequest agreementRequest)
         {
             return new OkObjectResult(await _agreementService.Update(id, agreementRequest));
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("interest")]
+        [ProducesResponseType(typeof(AgreementInterestResponse), 200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> SubmitAgreement([FromBody] AgreementInterestRequest agreementInterestRequest)
+        {
+            return new OkObjectResult(await _agreementService.AgreementInterestChange(agreementInterestRequest));
         }
     }
 }
