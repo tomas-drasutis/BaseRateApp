@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using BaseRateApp.Models.Response;
+using BaseRateApp.Persistance.Entities;
 
 namespace BaseRateApp.Services.Mapper
 {
@@ -9,7 +8,11 @@ namespace BaseRateApp.Services.Mapper
     {
         public MapperProfile()
         {
+            CreateMap<AgreementRequest, Agreement>();
+            CreateMap<Agreement, AgreementResponse>();
 
+            CreateMap<CustomerRequest, Customer>();
+            CreateMap<Customer, CustomerResponse>();
         }
     }
 }

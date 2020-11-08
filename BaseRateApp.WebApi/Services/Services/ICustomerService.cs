@@ -9,5 +9,7 @@ namespace BaseRateApp.Services.CustomerService
     {
         Task<CustomerResponse> GetById(Guid id);
         Task<IEnumerable<CustomerResponse>> GetAll();
+        Task<CustomerResponse> Create(CustomerRequest model);
+        Task<CustomerResponse> Update(Guid id, CustomerRequest model);
     }
 }

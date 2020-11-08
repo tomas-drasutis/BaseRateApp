@@ -2,11 +2,13 @@ using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
+using BaseRateApp.Persistance;
 using BaseRateApp.Services.Mapper;
 using BaseRateApp.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +28,9 @@ namespace BaseRateApp.WebApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ConfigureDatabase(services);
             ConfigureMappers(services);
 
             Log.Logger = new LoggerConfiguration()
@@ -44,6 +46,19 @@ namespace BaseRateApp.WebApi
 
         }
 
+        private void ConfigureDatabase(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetSection("DatabaseConnectionString").Value;
+
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new ArgumentNullException(nameof(connectionString), "Database connection string not found");
+
+            services.AddDbContext<IDatabaseContext, DatabaseContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+            }, ServiceLifetime.Transient);
+        }
+
         private static void ConfigureMappers(IServiceCollection services)
         {
             var mapperConfig = new MapperConfiguration(cfg =>
@@ -56,7 +71,6 @@ namespace BaseRateApp.WebApi
             services.AddSingleton<IMapper>(x => mapper);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseSwagger(c =>

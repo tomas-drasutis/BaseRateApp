@@ -4,8 +4,8 @@ using System.Text;
 
 namespace BaseRateApp.Models.Response
 {
-    public class CustomerResponse : CustomerRequest, IResponseModel<Guid>
+    public interface IResponseModel<TKey>
     {
-        public Guid Id { get; set; }
+        TKey Id { get; set; }
     }
 }

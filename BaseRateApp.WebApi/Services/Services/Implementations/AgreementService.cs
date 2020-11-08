@@ -1,4 +1,5 @@
 ﻿using BaseRateApp.Models.Response;
+using BaseRateApp.Services.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,14 +9,21 @@ namespace BaseRateApp.Services.Implementations
 {
     public class AgreementService : IAgreementService
     {
-        public Task<AgreementResponse> GetById(Guid id)
+        private readonly IAgreementRepository _agreementRepository;
+
+        public AgreementService(IAgreementRepository agreementRepository)
         {
-            throw new NotImplementedException();
+            _agreementRepository = agreementRepository;
         }
 
-        public Task<IEnumerable<AgreementResponse>> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        public Task<AgreementResponse> GetById(Guid id) => _agreementRepository.GetById(id);
+
+        public Task<IEnumerable<AgreementResponse>> GetAll() => _agreementRepository.GetAll();
+
+        public Task<AgreementResponse> Create(AgreementRequest model) => _agreementRepository.Create(model);
+
+        public Task<AgreementResponse> Update(Guid id, AgreementRequest model) => _agreementRepository.Update(id, model);
+
+        public Task<IEnumerable<AgreementResponse>> GetByClientId(Guid clientId) => _agreementRepository.GetByClientId(clientId);
     }
 }

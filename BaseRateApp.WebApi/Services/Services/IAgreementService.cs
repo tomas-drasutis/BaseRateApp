@@ -9,5 +9,8 @@ namespace BaseRateApp.Services
     {
         Task<AgreementResponse> GetById(Guid id);
         Task<IEnumerable<AgreementResponse>> GetAll();
+        Task<AgreementResponse> Create(AgreementRequest model);
+        Task<AgreementResponse> Update(Guid id, AgreementRequest model);
+        Task<IEnumerable<AgreementResponse>> GetByClientId(Guid clientId);
     }
 }

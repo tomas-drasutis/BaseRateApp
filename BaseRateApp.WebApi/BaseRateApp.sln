@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp.Models", "Model
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp.Services", "Services\BaseRateApp.Services.csproj", "{64CB6D1A-162C-4A19-B281-8C095CD60DF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseRateApp.Persistance", "BaseRateApp.Persistance\BaseRateApp.Persistance.csproj", "{0B5FFC9B-38BA-46C7-AE44-42C7334072EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64CB6D1A-162C-4A19-B281-8C095CD60DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5FFC9B-38BA-46C7-AE44-42C7334072EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5FFC9B-38BA-46C7-AE44-42C7334072EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5FFC9B-38BA-46C7-AE44-42C7334072EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5FFC9B-38BA-46C7-AE44-42C7334072EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
