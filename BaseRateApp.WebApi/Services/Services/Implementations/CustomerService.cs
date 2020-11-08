@@ -24,5 +24,7 @@ namespace BaseRateApp.Services.CustomerService.Implementations
 
         public Task<CustomerResponse> Update(Guid id, CustomerRequest model) => _customerRepository.Update(id, model);
 
+        public Task<CustomerResponse> Delete(Guid id) => _customerRepository.Delete(id);
+
     }
 }

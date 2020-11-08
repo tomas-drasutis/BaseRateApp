@@ -11,5 +11,6 @@ namespace BaseRateApp.Services.CustomerService
         Task<IEnumerable<CustomerResponse>> GetAll();
         Task<CustomerResponse> Create(CustomerRequest model);
         Task<CustomerResponse> Update(Guid id, CustomerRequest model);
+        Task<CustomerResponse> Delete(Guid id);
     }
 }

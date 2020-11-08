@@ -62,6 +62,16 @@ namespace BaseRateApp.WebApi.Controllers
             return new OkObjectResult(await _customerService.Update(id, customerRequest));
         }
 
+        [Microsoft.AspNetCore.Mvc.HttpDelete]
+        [Microsoft.AspNetCore.Mvc.Route("{id}")]
+        [ProducesResponseType(typeof(CustomerResponse), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            return new OkObjectResult(await _customerService.Delete(id));
+        }
+
         [Microsoft.AspNetCore.Mvc.HttpGet]
         [Microsoft.AspNetCore.Mvc.Route("{id}/agreement")]
         [ProducesResponseType(typeof(AgreementResponse), 200)]

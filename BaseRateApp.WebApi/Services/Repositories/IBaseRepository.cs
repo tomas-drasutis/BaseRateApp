@@ -13,5 +13,6 @@ namespace BaseRateApp.Services.Repositories
         Task<TReadModel> Create(TWriteModel model);
         Task<TReadModel> Update(TKey id, TWriteModel model);
         Task<IEnumerable<TReadModel>> GetAll();
+        Task<TReadModel> Delete(Guid id);
     }
 }

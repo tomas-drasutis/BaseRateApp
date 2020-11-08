@@ -49,6 +49,16 @@ namespace BaseRateApp.Services.Repositories.Implementations
             return ConvertToResponseModel(entity);
         }
 
+        public virtual async Task<TReadModel> Delete(Guid id)
+        {
+            var entity = await GetEntityById(id);
+
+            dbContext.Set<TEntity>().Remove(entity);
+            await dbContext.SaveChangesAsync();
+
+            return ConvertToResponseModel(entity);
+        }
+
         public virtual async Task CreateRange(IEnumerable<TWriteModel> models)
         {
             var entities = await Task.WhenAll(models.Select(async m => await ConvertToEntity(m)));

@@ -1,12 +1,10 @@
 ﻿using BaseRateApp.Models.Response;
-using Microsoft.AspNetCore.Hosting;
+using BaseRateApp.Services.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Serilog;
 using System;
-using System.IO;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace BaseRateApp.WebApi.Middleware
@@ -14,53 +12,49 @@ namespace BaseRateApp.WebApi.Middleware
     public class ErrorHandling
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
-        public ErrorHandling(RequestDelegate next, ILogger logger)
+        private readonly ILogger<ErrorHandling> _logger;
+
+        public ErrorHandling(RequestDelegate next, ILogger<ErrorHandling> logger)
         {
             _next = next;
             _logger = logger;
         }
-        public async Task InvokeAsync(HttpContext context)
+
+        public async Task Invoke(HttpContext context)
         {
             try
             {
                 await _next(context);
             }
-            catch (Exception ex)
+            catch (DomainException e)
             {
-                await LogException(context, ex);
-                await HandleExceptionAsync(context, ex);
+                var statusCode = e.Type switch
+                {
+                    DomainExceptionType.AlreadyExists => 409,
+                    DomainExceptionType.NotFound => 404,
+                    _ => 400
+                };
+                await WriteErrorResponse(context.Response, statusCode, e.Type.ToString(), e.Message);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Exception occured in method {context.Request.GetDisplayUrl()}");
+                await WriteErrorResponse(context.Response, 500, "UnexpectedError", "An unexpected error has occured");
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static async Task WriteErrorResponse(HttpResponse response, int statusCode, string errorCode, string description)
         {
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            response.StatusCode = statusCode;
+            response.ContentType = "application/json";
 
-            var errorMessage = "Internal server error.";
-
-            return context.Response.WriteAsync(new ErrorResponse { Message = errorMessage }.ToString());
-        }
-
-        private async Task LogException(HttpContext context, Exception exception)
-        {
-            context.Request.EnableBuffering();
-            context.Request.Body.Seek(0, SeekOrigin.Begin);
-
-            using (var reader = new StreamReader(context.Request.Body))
+            var responseObject = new ErrorResponse
             {
-                var body = await reader.ReadToEndAsync();
+                Code = errorCode,
+                Description = description
+            };
 
-                _logger.Error(
-                    exception,
-                    $"WebApi exception, Method: {{method}}, Content: {{faultMessage}}",
-                    $"{context.Request.Method} {context.Request.GetDisplayUrl()}",
-                    JsonConvert.SerializeObject(body));
-
-                context.Request.Body.Seek(0, SeekOrigin.Begin);
-            }
+            await response.WriteAsync(JsonConvert.SerializeObject(responseObject));
         }
-
     }
 }

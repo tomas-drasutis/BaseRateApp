@@ -30,6 +30,8 @@ namespace BaseRateApp.Services.Implementations
 
         public Task<AgreementResponse> Update(Guid id, AgreementRequest model) => _agreementRepository.Update(id, model);
 
+        public Task<AgreementResponse> Delete(Guid id) => _agreementRepository.Delete(id);
+
         public Task<IEnumerable<AgreementResponse>> GetByClientId(Guid clientId) => _agreementRepository.GetByClientId(clientId);
 
         public async Task<AgreementInterestResponse> AgreementInterestChange(AgreementInterestRequest model)

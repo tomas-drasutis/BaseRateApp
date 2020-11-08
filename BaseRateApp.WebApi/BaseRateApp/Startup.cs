@@ -33,10 +33,6 @@ namespace BaseRateApp.WebApi
             ConfigureDatabase(services);
             ConfigureMappers(services);
 
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
-
             services.AddControllers();
 
             services.AddSwaggerGen(x =>
@@ -73,6 +69,8 @@ namespace BaseRateApp.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ErrorHandling>();
+
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = "swagger/{documentName}/swagger.json";
@@ -89,8 +87,6 @@ namespace BaseRateApp.WebApi
             {
                 endpoints.MapControllers();
             });
-
-            app.UseMiddleware<ErrorHandling>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

@@ -13,6 +13,7 @@ namespace BaseRateApp.Services
         Task<AgreementResponse> Create(AgreementRequest model);
         Task<AgreementResponse> Update(Guid id, AgreementRequest model);
         Task<IEnumerable<AgreementResponse>> GetByClientId(Guid clientId);
+        Task<AgreementResponse> Delete(Guid id);
 
         Task<AgreementInterestResponse> AgreementInterestChange(AgreementInterestRequest model);
     }

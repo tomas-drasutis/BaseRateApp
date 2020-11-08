@@ -4,11 +4,7 @@ namespace BaseRateApp.Models.Response
 {
     public class ErrorResponse
     {
-        public string Message { get; set; }
-
-        public override string ToString()
-        {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
+        public string Code { get; set; }
+        public string Description { get; set; }
     }
 }
