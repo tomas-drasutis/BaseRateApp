@@ -12,6 +12,9 @@ The application has swagger implemented that can be accessed after starting the 
 The application is using:
 
 Autofac - for inversion of control;
+
 Entity Framework core - for object-database mapping using LINQ;
+
 NUnit - for testing;
+
 Moq - for creating test mocks.
