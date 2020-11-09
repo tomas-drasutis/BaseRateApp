@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace BaseRateApp.Models.Response
+﻿namespace BaseRateApp.Models.Response
 {
     public class ErrorResponse
     {

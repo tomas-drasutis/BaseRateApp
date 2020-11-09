@@ -1,19 +1,15 @@
 using System;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using BaseRateApp.Persistance;
 using BaseRateApp.Services.Mapper;
 using BaseRateApp.WebApi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Serilog;
 
 namespace BaseRateApp.WebApi
 {
